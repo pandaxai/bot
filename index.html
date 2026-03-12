@@ -8,7 +8,7 @@
   <script src="/_sdk/element_sdk.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&amp;family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Outfit:wght@300;400;500;600;700;800&amp;family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
   <style>
     * {
       -webkit-tap-highlight-color: transparent;
@@ -165,10 +165,11 @@
 
     .logo-container {
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 20px;
-      margin-bottom: 20px;
+      gap: 24px;
+      margin-bottom: 50px;
       position: relative;
       z-index: 1;
       animation: fadeInDown 0.8s cubic-bezier(0.23, 1, 0.320, 1);
@@ -186,9 +187,9 @@
     }
 
     .logo-badge {
-      width: 72px;
-      height: 72px;
-      border-radius: 24px;
+      width: 120px;
+      height: 120px;
+      border-radius: 32px;
       background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #ec4899 100%);
       display: flex;
       align-items: center;
@@ -219,14 +220,14 @@
     }
 
     .title-text {
-      font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif;
-      font-size: 3.5rem;
-      font-weight: 900;
+      font-family: 'Space Grotesk', 'Outfit', 'Plus Jakarta Sans', sans-serif;
+      font-size: 6.5rem;
+      font-weight: 800;
       background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 35%, #ec4899 70%, #f472b6 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      letter-spacing: -2px;
+      letter-spacing: -0.5px;
       margin: 0;
       animation: fadeInDown 1.2s cubic-bezier(0.23, 1, 0.320, 1) 0.1s both;
       text-shadow: 0 20px 40px rgba(168, 85, 247, 0.2);
@@ -234,7 +235,7 @@
 
     .subtitle {
       color: rgba(148, 163, 184, 0.95);
-      font-size: 1.1rem;
+      font-size: 0.8rem;
       font-weight: 500;
       letter-spacing: 0.6px;
       margin: 18px 0 0;
@@ -751,9 +752,7 @@
      <div class="premium-header">
       <div class="logo-container">
        <div class="logo-badge">
-        <svg class="w-7 h-7 text-white" fill="currentColor" viewbox="0 0 24 24">
-         <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
-        </svg>
+        <img src="https://raw.githubusercontent.com/pandaxai/bot/main/pandax.png" alt="PandaX Logo" class="w-32 h-32 object-contain" loading="lazy" onerror="console.error('Logo failed to load'); this.style.display='none';">
        </div>
        <div>
         <h1 id="app-title" class="title-text">PandaX</h1>
@@ -834,78 +833,225 @@
     // Content generation functions that incorporate user input
     function generateTweetAbout(topic) {
       const templates = [
-        `Research shows "${topic}" is far more complex than most realize.
+        `DEEP DIVE: Why "${topic}" matters more than you think
 
-After spending months studying this, I've identified 3 critical success factors that separate the winners from everyone else:
+I spent the last 8-10 months obsessively studying "${topic}". Read everything. Interviewed 30+ experts. Tested frameworks. Failed repeatedly. Found what actually works.
 
-1. DEEP UNDERSTANDING
-You need to move beyond surface-level knowledge. Understand the "why" behind every principle, not just the "what." This foundation determines everything that comes after.
+Most people approach "${topic}" completely backwards from the start.
 
-2. CONSISTENT PRACTICE
-Consistency beats intensity every single time. Daily small wins compound into extraordinary results over months and years. Most people quit right before the breakthrough happens.
+THE PROBLEM:
 
-3. CONSTANT ITERATION
-The landscape around "${topic}" changes constantly. You must be willing to test, measure, fail, learn, and adjust. Rigidity kills progress.
+Everyone's taught to chase tactics. Shiny new strategies. The "hacks." The latest framework that's trending.
 
-The combination of these three creates an almost unfair advantage. Start today.`,
-        
-        `The REAL truth about "${topic}":
+But this is the problem—tactics without foundation crumble.
 
-Most people completely approach this wrong. I spent years doing it the hard way before someone showed me a better path.
+You end up spinning your wheels. Trying this. Trying that. Never going deep on anything. Getting mediocre results that make you question if "${topic}" even works.
 
-Here's what I learned:
+Here's what I learned: "${topic}" has layers. And most people only see the surface layer.
 
-❌ WRONG: Think you need to be perfect from day one
-✅ RIGHT: Focus on progress over perfection
+LAYER 1: THE FOUNDATION (What 99% skip)
 
-❌ WRONG: Try to do everything at once
-✅ RIGHT: Master one thing, then layer in complexity
+Before you do anything with "${topic}", you need to build unshakeable fundamentals. This isn't sexy. It's not Instagram-worthy. It's boring.
 
-❌ WRONG: Copy what others are doing exactly
-✅ RIGHT: Adapt principles to YOUR unique situation
+But it's EVERYTHING.
 
-❌ WRONG: Expect overnight success
-✅ RIGHT: Play the long game and compound your efforts
+This means:
+• Understanding the core principles (not just the tactics)
+• Learning the psychology and human behavior behind "${topic}"
+• Studying case studies deeply (not just scrolling headlines)
+• Understanding WHY things work, not just how
+• Building mental models that stick with you
 
-The gap between the top performers in "${topic}" and everyone else isn't talent—it's consistency and the willingness to stay the course when things get hard.
+When you have solid fundamentals in "${topic}", you can adapt to anything. You're not dependent on one specific tactic. You understand the game, not just one move.
 
-This is the difference that matters most.`,
-        
-        `"${topic}" isn't a one-time achievement—it's a daily practice.
+LAYER 2: SYSTEMS & EXECUTION
 
-Here's what I wish someone told me 5 years ago:
+Most people lack systems. They rely on willpower and motivation.
 
-I struggled with this for YEARS. Failed more times than I can count. Made mistakes I didn't think were possible. Wasted time going in circles.
+This works for 2 weeks. Then motivation dies. And when motivation dies, everything stops.
 
-Then I discovered the actual pattern:
+The winners in "${topic}"? They build systems.
 
-You need to stop thinking of "${topic}" as a destination. It's not something you "complete" and move on from. It's a continuous practice where you get 1% better every single day.
+They create:
+• Daily habits and routines around "${topic}"
+• Frameworks that are automated and repeatable
+• Processes that work even on days they don't feel like it
+• Accountability structures that keep them on track
+• Feedback loops that help them iterate
 
-The compounding effect is insane. After 6 months of consistent work, you'll look back and barely recognize who you were. After 2 years, you'll be in a completely different league.
+When you build systems for "${topic}", you're no longer reliant on how you feel. You're reliant on the system. And systems are reliable.
 
-The secret? Start NOW and don't stop. Everyone knows the principles. Almost nobody executes.
+LAYER 3: ITERATION & OPTIMIZATION
 
-Be different.`,
-        
-        `UNPOPULAR OPINION: Most advice on "${topic}" misses the point entirely.
+Most people do "${topic}" the same way for months. No changes. No adjustments. Just hoping.
 
-After testing extensively and measuring what actually produces results, here's what REALLY moves the needle:
+The elite in "${topic}" are constantly measuring, testing, and iterating.
 
-Most people focus on the wrong metrics. They chase vanity numbers instead of focusing on what actually matters.
+They ask:
+• What's working?
+• What's not?
+• Where's the biggest opportunity?
+• What can I improve by 10%?
 
-The real leverage in "${topic}" comes from understanding these hidden truths:
+They do this weekly. Monthly. Quarterly. Always looking to compound small improvements.
 
-→ Volume matters more than perfection (done > perfect)
-→ Feedback loops are your competitive advantage
-→ Systems beat willpower every single time
-→ Community accelerates learning exponentially
-→ Patience compounds into impossible results
+A 10% improvement every 30 days is a 3x improvement annually.
 
-If you want to get serious about "${topic}", stop reading articles and consuming content. Start building in public. Show your work. Get feedback. Iterate.
+That's not luck. That's deliberate iteration.
 
-That's when the magic happens.
+LAYER 4: RESILIENCE & MINDSET
 
-Ready to commit to this?`
+Here's the unspoken part: "${topic}" gets hard. Really hard sometimes.
+
+You'll doubt yourself. You'll hit plateaus. You'll wonder if you're wasting time.
+
+This is where most people quit. Right before the breakthrough.
+
+The people who win at "${topic}" have mental toughness. They understand that:
+• Plateaus are normal and temporary
+• Setbacks are data, not failures
+• The market needs time to respond
+• Consistency compounds over time
+• Quitting is the only guaranteed way to fail
+
+THE FRAMEWORK:
+
+So here's my "${topic}" framework:
+
+MONTH 1-2: FOUNDATION
+→ Study and learn deeply
+→ Understand the principles
+→ Build mental models
+→ Consume quality content
+
+MONTH 3-4: BUILD BASICS
+→ Create your first system
+→ Start basic execution
+→ Document everything
+→ Get feedback
+
+MONTH 5-6: OPTIMIZE
+→ Measure what's working
+→ Iterate based on data
+→ Refine your approach
+→ Start seeing results
+
+MONTH 7+: SCALE
+→ Do more of what works
+→ Master your system
+→ Compound the gains
+→ Help others with "${topic}"
+
+THE REALITY:
+
+If you implement this framework for "${topic}", you will absolutely crush it. Not in 2 weeks. But in 6-12 months? You'll be unrecognizable.
+
+You'll be in the top 1% of people at "${topic}".
+
+Most people won't do this. It's too slow. Too methodical. Not sexy enough.
+
+That's why you should do it.
+
+Start today. Pick one thing about "${topic}". Go deep. Build from there.
+
+The compound growth is unreal.`,
+
+        `THE COMPLETE SYSTEM FOR "${topic}": What the winners do differently
+
+I'm gonna give you the complete picture of how to actually win at "${topic}".
+
+Not the sanitized version. Not the Instagram highlight reel. The actual truth.
+
+I figured this out after failing at "${topic}" more times than I can count. I'm talking humbling failures. Ego-crushing losses. Times I almost gave up.
+
+But those failures taught me more than anything else.
+
+Here's what separates people crushing it at "${topic}" from everyone else:
+
+THE WRONG APPROACH (What 95% of people do):
+
+❌ Read one blog post and think they understand "${topic}"
+❌ Try to implement everything at once
+❌ Give up after 2 weeks when results don't appear
+❌ Copy what someone else did without adaptation
+❌ Never measure or track anything
+❌ Quit when it gets hard
+❌ Focus on vanity metrics instead of real results
+❌ Work on "${topic}" sporadically (when inspired)
+❌ Never get feedback on their approach
+❌ Blame external circumstances for lack of results
+
+THE RIGHT APPROACH (What actually works):
+
+✅ Commit to 6-12 months minimum with "${topic}"
+✅ Build one solid foundation before adding complexity
+✅ Show up DAILY, regardless of motivation
+✅ Adapt proven frameworks to YOUR specific situation
+✅ Track metrics that actually matter
+✅ Embrace difficulty as part of the journey
+✅ Obsess over real results, not vanity numbers
+✅ Create non-negotiable daily habits around "${topic}"
+✅ Actively seek feedback and criticism
+✅ Take ownership of your results
+
+THE KEY DIFFERENCE:
+
+The gap between someone dominating "${topic}" and someone struggling isn't:
+• Natural talent (most didn't have it)
+• Money (many started with nothing)
+• Time (they have the same 24 hours)
+• Resources (they often had less)
+
+The gap is:
+
+MINDSET + CONSISTENCY + ADAPTATION
+
+Period.
+
+Someone who is mediocre at "${topic}" but shows up daily will eventually beat someone talented who shows up sporadically. Every single time.
+
+THE BREAKDOWN:
+
+Here's how to actually execute "${topic}":
+
+CLARITY PHASE (Week 1-2):
+Get crystal clear on what you're trying to achieve with "${topic}". Define success. Understand the rules of the game. Study people who are winning.
+
+FOUNDATION PHASE (Week 3-8):
+Build the fundamentals. Don't skip this. I know it's tempting. Don't. Learn the principles. Practice the basics. Get really good at fundamentals.
+
+EXECUTION PHASE (Week 9-16):
+Start implementing "${topic}" consistently. Daily practice. Track what you're doing. Get feedback. Make small improvements.
+
+OPTIMIZATION PHASE (Week 17-26):
+Analyze what's working. Double down on it. Eliminate what's not working. Iterate rapidly. Measure everything.
+
+SCALE PHASE (Week 27+):
+Once you've figured out what works with "${topic}", scale it. Do more of it. Compound your gains. Help others.
+
+THE REAL TALK:
+
+By week 4, most people have quit "${topic}". They didn't see instant results, so they assumed it doesn't work.
+
+This is where the opportunity is.
+
+If you're willing to stick with "${topic}" for 8-12 weeks when others quit, you'll have a massive edge.
+
+Your system will start working. Your skills will compound. Your confidence will skyrocket.
+
+People will ask you how you got so good at "${topic}".
+
+THE ANSWER IS SIMPLE:
+
+I showed up when others quit. I iterated when others complained. I stayed committed when others got bored.
+
+You can do the same.
+
+Start "${topic}" TODAY. Not tomorrow. Today.
+
+Commit to 90 days minimum. Do the work. Track the results. Adjust.
+
+90 days from now, you'll be grateful you started today.`
       ];
       
       return templates[Math.floor(Math.random() * templates.length)];
@@ -1123,5 +1269,5 @@ Ready to commit to this?`
 
     updateUI(defaultConfig);
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9db3463cb58f3f18',t:'MTc3MzMyMzQ5NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9db3a398d50b3f18',t:'MTc3MzMyNzMxOC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>

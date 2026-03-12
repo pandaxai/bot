@@ -1,0 +1,826 @@
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>PandaX AI Studio</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+    * {
+      -webkit-tap-highlight-color: transparent;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+      overflow: hidden;
+    }
+
+    .app-wrapper {
+      height: 100%;
+      width: 100%;
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+      background: linear-gradient(135deg, #0f0a1f 0%, #1a0e3f 25%, #0d1b35 75%, #0a1428 100%);
+      position: relative;
+    }
+
+    .app-wrapper::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        radial-gradient(ellipse at 80% -20%, rgba(139, 92, 246, 0.15) 0%, transparent 40%),
+        radial-gradient(ellipse at 20% 80%, rgba(59, 130, 246, 0.1) 0%, transparent 45%),
+        radial-gradient(ellipse at -10% 50%, rgba(236, 72, 153, 0.08) 0%, transparent 35%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .content-wrapper {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Glassmorphic Cards */
+    .glass-card {
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.4) 0%, rgba(30, 41, 59, 0.2) 100%);
+      backdrop-filter: blur(40px);
+      -webkit-backdrop-filter: blur(40px);
+      border: 1px solid rgba(139, 92, 246, 0.2);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    }
+
+    .glass-card:hover {
+      border-color: rgba(139, 92, 246, 0.4);
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.5) 0%, rgba(30, 41, 59, 0.3) 100%);
+      box-shadow: 0 12px 48px rgba(139, 92, 246, 0.15);
+    }
+
+    /* Premium Header */
+    .premium-header {
+      position: relative;
+      padding: 40px 0 30px;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .premium-header::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(139, 92, 246, 0.25) 0%, transparent 70%);
+      filter: blur(80px);
+      pointer-events: none;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 16px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .logo-badge {
+      width: 56px;
+      height: 56px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 12px 32px rgba(139, 92, 246, 0.4), inset 0 1px 0 rgba(255,255,255,0.1);
+      animation: floatAnim 4s ease-in-out infinite;
+    }
+
+    @keyframes floatAnim {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-12px); }
+    }
+
+    .title-text {
+      font-family: 'Syne', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #60a5fa 0%, #8b5cf6 50%, #ec4899 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -1px;
+      margin: 0;
+    }
+
+    .subtitle {
+      color: rgba(148, 163, 184, 0.8);
+      font-size: 0.95rem;
+      font-weight: 400;
+      letter-spacing: 0.5px;
+      margin: 8px 0 0;
+    }
+
+    /* Tool Grid */
+    .tool-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
+      margin: 24px 0;
+    }
+
+    .tool-btn {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.08) 0%, rgba(139, 92, 246, 0.05) 100%);
+      border: 1.5px solid rgba(139, 92, 246, 0.2);
+      border-radius: 18px;
+      padding: 16px;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      text-align: center;
+      -webkit-user-select: none;
+      user-select: none;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .tool-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .tool-btn:active {
+      transform: scale(0.96);
+    }
+
+    @media (hover: hover) {
+      .tool-btn:hover {
+        background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(139, 92, 246, 0.12) 100%);
+        border-color: rgba(139, 92, 246, 0.5);
+        transform: translateY(-6px);
+        box-shadow: 0 16px 40px rgba(139, 92, 246, 0.2);
+      }
+
+      .tool-btn:hover::before {
+        left: 100%;
+      }
+    }
+
+    .tool-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(139, 92, 246, 0.1);
+      transition: all 0.3s;
+    }
+
+    .tool-btn:hover .tool-icon {
+      background: rgba(139, 92, 246, 0.2);
+      transform: scale(1.1);
+    }
+
+    .tool-label {
+      color: white;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .tool-desc {
+      color: rgba(148, 163, 184, 0.6);
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+
+    /* Input Styles */
+    .input-section {
+      margin: 24px 0;
+    }
+
+    .input-label {
+      color: rgba(148, 163, 184, 0.7);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .input-field {
+      width: 100%;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1.5px solid rgba(139, 92, 246, 0.2);
+      border-radius: 16px;
+      padding: 16px;
+      color: white;
+      font-size: 0.95rem;
+      font-family: 'Inter', sans-serif;
+      resize: vertical;
+      min-height: 120px;
+      transition: all 0.3s ease;
+      -webkit-appearance: none;
+      -webkit-border-radius: 16px;
+    }
+
+    .input-field:focus {
+      outline: none;
+      border-color: rgba(139, 92, 246, 0.6);
+      background: rgba(15, 23, 42, 0.95);
+      box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.15);
+    }
+
+    .input-field::placeholder {
+      color: rgba(148, 163, 184, 0.5);
+    }
+
+    .input-hint {
+      font-size: 0.8rem;
+      color: rgba(148, 163, 184, 0.6);
+      margin-top: 10px;
+    }
+
+    /* Results */
+    .results-section {
+      margin-top: 28px;
+    }
+
+    .results-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+      padding: 0 4px;
+    }
+
+    .results-title {
+      color: white;
+      font-weight: 700;
+      font-size: 1.05rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .pulse-indicator {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #10b981;
+      animation: pulseAnim 2s ease-in-out infinite;
+    }
+
+    @keyframes pulseAnim {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(1.2); }
+    }
+
+    .clear-btn {
+      background: transparent;
+      color: rgba(148, 163, 184, 0.6);
+      border: none;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      padding: 6px 12px;
+      border-radius: 8px;
+    }
+
+    .clear-btn:hover {
+      color: rgba(148, 163, 184, 1);
+      background: rgba(139, 92, 246, 0.1);
+    }
+
+    .result-card {
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.6) 0%, rgba(30, 41, 59, 0.4) 100%);
+      border: 1px solid rgba(139, 92, 246, 0.15);
+      border-radius: 18px;
+      padding: 20px;
+      animation: slideUpCard 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      margin-bottom: 12px;
+    }
+
+    @keyframes slideUpCard {
+      from {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .result-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+      gap: 12px;
+    }
+
+    .result-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: rgba(59, 130, 246, 0.8);
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+    }
+
+    .copy-btn {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.9) 0%, rgba(139, 92, 246, 0.9) 100%);
+      color: white;
+      border: 1px solid rgba(139, 92, 246, 0.5);
+      border-radius: 10px;
+      padding: 8px 14px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      -webkit-appearance: none;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+
+    .copy-btn:active {
+      transform: scale(0.94);
+    }
+
+    @media (hover: hover) {
+      .copy-btn:hover {
+        transform: scale(1.08);
+        box-shadow: 0 8px 24px rgba(59, 130, 246, 0.4);
+        background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+      }
+    }
+
+    .result-content {
+      color: rgba(229, 231, 235, 0.9);
+      font-size: 0.95rem;
+      line-height: 1.7;
+      white-space: pre-wrap;
+      word-break: break-word;
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* Loading State */
+    .loading-state {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 24px;
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.08) 0%, rgba(139, 92, 246, 0.08) 100%);
+      border: 1.5px solid rgba(139, 92, 246, 0.2);
+      border-radius: 16px;
+      animation: fadeInAnim 0.3s ease-out;
+    }
+
+    @keyframes fadeInAnim {
+      from {
+        opacity: 0;
+        transform: translateY(-12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .spinner-dots {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      animation: bounceAnim 1.4s ease-in-out infinite;
+    }
+
+    @keyframes bounceAnim {
+      0%, 80%, 100% { opacity: 0.3; transform: scale(0.8) translateY(0); }
+      40% { opacity: 1; transform: scale(1) translateY(-8px); }
+    }
+
+    .dot:nth-child(1) { background: #3b82f6; animation-delay: 0s; }
+    .dot:nth-child(2) { background: #8b5cf6; animation-delay: 0.2s; }
+    .dot:nth-child(3) { background: #ec4899; animation-delay: 0.4s; }
+
+    .loading-text {
+      color: rgba(148, 163, 184, 0.8);
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 16px;
+      right: 16px;
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: white;
+      padding: 16px 20px;
+      border-radius: 14px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 12px 36px rgba(16, 185, 129, 0.35);
+      animation: toastSlideUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      z-index: 1000;
+    }
+
+    @keyframes toastSlideUp {
+      from {
+        opacity: 0;
+        transform: translateY(32px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .title-text {
+        font-size: 1.8rem;
+      }
+
+      .tool-grid {
+        grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+        gap: 10px;
+      }
+
+      .premium-header {
+        padding: 28px 0 20px;
+      }
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: rgba(15, 23, 42, 0.3);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.4) 0%, rgba(139, 92, 246, 0.4) 100%);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.6) 0%, rgba(139, 92, 246, 0.6) 100%);
+    }
+  </style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full">
+  <div class="app-wrapper">
+   <div class="content-wrapper w-full h-full">
+    <div class="w-full max-w-3xl mx-auto px-4 sm:px-6 py-8 pb-32"><!-- Premium Header -->
+     <div class="premium-header">
+      <div class="logo-container">
+       <div class="logo-badge">
+        <svg class="w-7 h-7 text-white" fill="currentColor" viewbox="0 0 24 24">
+         <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+        </svg>
+       </div>
+       <div>
+        <h1 id="app-title" class="title-text">PandaX</h1>
+        <p class="subtitle" id="app-subtitle">AI-powered content generation suite</p>
+       </div>
+      </div>
+     </div><!-- Input Section -->
+     <div class="input-section"><label class="input-label">📝 Your Inspiration</label> <textarea id="user-input" class="input-field" placeholder="Enter a topic, idea, or paste content to transform..."></textarea>
+      <p class="input-hint">💡 Pro Tip: Be specific for better AI-generated results</p>
+     </div><!-- Tool Grid -->
+     <div class="tool-grid"><button class="tool-btn" data-tool="generate-tweet">
+       <div class="tool-icon">
+        <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+        </svg>
+       </div><span class="tool-label">Tweet</span> <span class="tool-desc">Viral Posts</span> </button> <button class="tool-btn" data-tool="reply-lab">
+       <div class="tool-icon">
+        <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6" />
+        </svg>
+       </div><span class="tool-label">Reply</span> <span class="tool-desc">Smart Replies</span> </button> <button class="tool-btn" data-tool="viral-hooks">
+       <div class="tool-icon">
+        <svg class="w-5 h-5 text-pink-400" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+        </svg>
+       </div><span class="tool-label">Hooks</span> <span class="tool-desc">Attention Grabbers</span> </button> <button class="tool-btn" data-tool="thread-architect">
+       <div class="tool-icon">
+        <svg class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+        </svg>
+       </div><span class="tool-label">Thread</span> <span class="tool-desc">Build Threads</span> </button> <button class="tool-btn" data-tool="content-studio">
+       <div class="tool-icon">
+        <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+        </svg>
+       </div><span class="tool-label">Studio</span> <span class="tool-desc">Full Suite</span> </button> <button class="tool-btn" data-tool="tweet-score">
+       <div class="tool-icon">
+        <svg class="w-5 h-5 text-yellow-400" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+        </svg>
+       </div><span class="tool-label">Score</span> <span class="tool-desc">Analyze</span> </button> <button class="tool-btn" data-tool="improve-tweet">
+       <div class="tool-icon">
+        <svg class="w-5 h-5 text-orange-400" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+        </svg>
+       </div><span class="tool-label">Improve</span> <span class="tool-desc">Enhance</span> </button> <button class="tool-btn" data-tool="ideas-generator">
+       <div class="tool-icon">
+        <svg class="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+        </svg>
+       </div><span class="tool-label">Ideas</span> <span class="tool-desc">Fresh Concepts</span> </button>
+     </div><!-- Loading State -->
+     <div id="loading-indicator" class="hidden loading-state">
+      <div class="spinner-dots">
+       <div class="dot"></div>
+       <div class="dot"></div>
+       <div class="dot"></div>
+      </div><span class="loading-text">Generating premium content...</span>
+     </div><!-- Results Section -->
+     <div id="results-panel" class="hidden results-section">
+      <div class="results-header">
+       <h2 class="results-title">
+        <div class="pulse-indicator"></div> Generated Content</h2><button id="clear-results" class="clear-btn">Clear All</button>
+      </div>
+      <div id="results-container" class="space-y-3">
+       <!-- Results inserted here -->
+      </div>
+     </div>
+    </div>
+   </div>
+  </div><!-- Toast Notification -->
+  <div id="toast" class="hidden">
+   <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+   </svg><span>Copied to clipboard!</span>
+  </div>
+  <script>
+    // Default configuration
+    const defaultConfig = {
+      app_title: 'PandaX AI Studio',
+      app_subtitle: 'AI-powered content generation suite',
+      input_placeholder: 'Enter a topic, idea, or paste content...',
+      primary_color: '#3b82f6',
+      accent_color: '#8b5cf6',
+      font_family: 'Inter'
+    };
+
+    // Generate content functions
+    function generateTweetAbout(topic) {
+      const templates = [
+        `🚀 Just realized something about "${topic}"...\n\nMost people approach it all wrong.\n\nThe secret? Start with the outcome, not the process.\n\nOnce you understand what success looks like, everything else becomes obvious. 🎯`,
+        `Hot take: "${topic}" isn't complicated.\n\nWe just make it that way.\n\nI spent 3 months optimizing this and found the answer was simpler than I thought.\n\nFocus on fundamentals first. 📈`,
+        `Nobody talks about the real benefit of "${topic}"...\n\nIt's not about the end result.\n\nIt's about who you become in the process.\n\nThis shift changes everything. 🔥`,
+        `If you're interested in "${topic}", here's what I wish I knew:\n\n1. Start small\n2. Track everything\n3. Iterate ruthlessly\n4. Stay consistent\n\nDo this for 90 days. 💪`,
+        `The "${topic}" journey nobody discusses:\n\n→ Starts with confusion\n→ Then frustration\n→ Then a breakthrough\n→ Then mastery\n\nMost quit at step 2. Don't. 💎`
+      ];
+      return templates[Math.floor(Math.random() * templates.length)];
+    }
+
+    function generateReplyTo(topic) {
+      const templates = [
+        `This perspective on "${topic}" is pure gold 🔥\n\nI've been implementing similar ideas and seeing dramatic improvements.\n\nThe key insight is often overlooked—everyone sees the obvious, but the leverage is in the details.\n\nThanks for this!`,
+        `Underrated take on "${topic}".\n\nMost people miss this because they're too deep in the weeds.\n\nOnce you zoom out and see the bigger picture, everything clicks.\n\nBookmarking this. 📌`,
+        `This is exactly what I needed to hear about "${topic}" today.\n\nI was overcomplicating it, and your approach just simplified everything.\n\nTime to rebuild around this. 🙏`,
+        `Couldn't agree more with this on "${topic}".\n\nToo many people get stuck on the surface level.\n\nYou've identified the real game-changer here. This deserves visibility.`,
+        `"${topic}" finally explained in a way that makes sense.\n\nI've been doing this for years and you just articulated what I couldn't.\n\nSharing with my whole team. ✅`
+      ];
+      return templates[Math.floor(Math.random() * templates.length)];
+    }
+
+    function generateViralHooks(topic) {
+      const hooks = [
+        `🪝 "I was wrong about ${topic}. Here's what I missed..."`,
+        `🪝 "The ${topic} trick that changed everything"`,
+        `🪝 "Everyone's doing ${topic} wrong"`,
+        `🪝 "This ${topic} method beats the standard by 10x"`,
+        `🪝 "The ${topic} secret they don't want you to know"`,
+        `🪝 "I spent $10K on ${topic}. Here's the summary"`,
+        `🪝 "Most people will never understand ${topic}"`,
+        `🪝 "One simple ${topic} trick that's changing lives"`,
+        `🪝 "Nobody's talking about this ${topic} angle"`,
+        `🪝 "This ${topic} takes 10 minutes but transforms everything"`
+      ];
+      return hooks.map((h, i) => `${i + 1}. ${h}`).join('\n\n');
+    }
+
+    function generateThreadOutline(topic) {
+      return `🧵 THREAD OUTLINE: ${topic}\n\n1/ Let me share what I've learned about "${topic}"\n\n2/ Most people skip the fundamentals\n\n3/ The real framework:\n• Foundation: Understanding core concepts\n• Building: Strategic implementation  \n• Optimization: Scaling up\n\n4/ Here's what nobody talks about...\n\n5/ Real results from applying this:\n📈 2-3x faster results\n📈 More consistent outcomes\n📈 10x better ROI\n\n6/ Common mistakes to avoid:\n❌ Overcomplicating things\n❌ Skipping the basics\n❌ Giving up too early\n\n7/ The one thing to focus on:\n→ Start small with daily consistent action\n\n8/ Final thoughts:\nIt's not perfection.\nIt's progress.\n\nStart today. 🚀`;
+    }
+
+    function generateContentIdeas(topic) {
+      const ideas = [
+        `1. "The ${topic} framework nobody discusses"`,
+        `2. "I tested 10 approaches to ${topic}. Here's the winner"`,
+        `3. "The free ${topic} playbook vs expensive courses"`,
+        `4. "Why beginners beat experts at ${topic}"`,
+        `5. "The ${topic} mistake that cost me 6 months"`,
+        `6. "My battle-tested ${topic} template (3 years to perfect)"`,
+        `7. "Common ${topic} myths even experts believe"`,
+        `8. "An underrated ${topic} angle that works 2x better"`,
+        `9. "My 5-step daily ${topic} process"`,
+        `10. "Why your ${topic} strategy is failing (and the fix)"`
+      ];
+      return ideas.join('\n\n');
+    }
+
+    function generateTweetScore(topic) {
+      const score = 7 + Math.floor(Math.random() * 3);
+      return `📊 CONTENT ANALYSIS: "${topic}"\n\n⭐ Overall Score: ${score}/10\n━━━━━━━━━━━━━━━━━\n\n✅ STRENGTHS:\n• Clear value proposition (9/10)\n• Strong emotional hook (${7 + Math.floor(Math.random() * 3)}/10)\n• Excellent structure (${7 + Math.floor(Math.random() * 3)}/10)\n• Authentic voice (${6 + Math.floor(Math.random() * 4)}/10)\n\n⚠️ IMPROVEMENTS:\n• Add a call-to-action (+0.5)\n• Include 1-2 relevant hashtags (+0.3)\n• Open with a curiosity gap (+0.2)\n\n🎯 VIRAL POTENTIAL: ${score > 8 ? 'Very High 🚀' : score > 6 ? 'High 🔥' : 'Medium 💡'}\n📈 Engagement: ${score > 8 ? '3-7x' : score > 6 ? '2-4x' : '1-2x'} your average`;
+    }
+
+    function generateImprovement(topic) {
+      return `"Make "${topic}" your competitive advantage.\n\nNot just another task.\n\nBut a core part of your identity.\n\nOnce you do this, everything changes.\n\nYou stop trying.\n\nYou start becoming."\n\n━━━━━━━━━━━━━━━━━\n📈 Why this works:\n✓ Specific promise\n✓ Emotional resonance  \n✓ Transformation angle\n✓ Powerful close`;
+    }
+
+    function generateIdeas(topic) {
+      const ideas = [
+        `1. "The counterintuitive truth about "${topic}" nobody discusses"`,
+        `2. "How I went from confused to confident in "${topic}""`,
+        `3. "The "${topic}" secret that separates winners"`,
+        `4. "Why conventional wisdom about ${topic} is wrong"`,
+        `5. "My personal ${topic} playbook (battle-tested)"`,
+        `6. "What nobody tells you about starting with "${topic}""`,
+        `7. "The ${topic} framework that changed my perspective"`,
+        `8. "Real talk: The ${topic} challenges people face"`,
+        `9. "Why most people fail at ${topic} (the fix)"`,
+        `10. "The unexpected benefit of ${topic}"`
+      ];
+      return ideas.join('\n\n');
+    }
+
+    // UI Update
+    function updateUI(config) {
+      const titleEl = document.getElementById('app-title');
+      const subtitleEl = document.getElementById('app-subtitle');
+      if (titleEl) titleEl.textContent = config.app_title || defaultConfig.app_title;
+      if (subtitleEl) subtitleEl.textContent = config.app_subtitle || defaultConfig.app_subtitle;
+    }
+
+    // Initialize SDK
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig: defaultConfig,
+        onConfigChange: async (config) => {
+          updateUI(config);
+        },
+        mapToCapabilities: (config) => ({
+          recolorables: [],
+          borderables: [],
+          fontEditable: undefined,
+          fontSizeable: undefined
+        }),
+        mapToEditPanelValues: (config) => new Map([
+          ['app_title', config.app_title || defaultConfig.app_title],
+          ['app_subtitle', config.app_subtitle || defaultConfig.app_subtitle],
+          ['footer_text', config.footer_text || '']
+        ])
+      });
+    }
+
+    // DOM Elements
+    const userInput = document.getElementById('user-input');
+    const resultsPanel = document.getElementById('results-panel');
+    const resultsContainer = document.getElementById('results-container');
+    const loadingIndicator = document.getElementById('loading-indicator');
+    const clearResultsBtn = document.getElementById('clear-results');
+    const toast = document.getElementById('toast');
+    const toolButtons = document.querySelectorAll('[data-tool]');
+
+    // Show toast
+    function showToast() {
+      toast.classList.remove('hidden');
+      setTimeout(() => toast.classList.add('hidden'), 2000);
+    }
+
+    // Copy to clipboard
+    async function copyToClipboard(text) {
+      try {
+        await navigator.clipboard.writeText(text);
+        showToast();
+      } catch (err) {
+        const textArea = document.createElement('textarea');
+        textArea.value = text;
+        textArea.style.position = 'fixed';
+        textArea.style.left = '-9999px';
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        showToast();
+      }
+    }
+
+    // Create result card
+    function createResultCard(content, toolName) {
+      const card = document.createElement('div');
+      card.className = 'result-card';
+      const toolLabel = toolName.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+      
+      card.innerHTML = `
+        <div class="result-header">
+          <span class="result-label">${toolLabel}</span>
+          <button class="copy-btn">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/>
+            </svg>
+            Copy
+          </button>
+        </div>
+        <div class="result-content">${content}</div>
+      `;
+      
+      card.querySelector('.copy-btn').addEventListener('click', () => copyToClipboard(content));
+      return card;
+    }
+
+    // Generate content
+    function generateContent(tool) {
+      const userText = userInput.value.trim();
+      
+      if (!userText) {
+        return '⚠️ Please enter a topic first!\n\nTry:\n• "AI productivity tips"\n• "Growing on Twitter"\n• "Morning routine hacks"\n\nThen select a tool to generate content!';
+      }
+
+      if (tool === 'generate-tweet') return `💡 Tweet about: "${userText}"\n\n${generateTweetAbout(userText)}`;
+      if (tool === 'reply-lab') return `💬 Smart reply to: "${userText}"\n\n${generateReplyTo(userText)}`;
+      if (tool === 'viral-hooks') return `🪝 Viral hooks for "${userText}":\n\n${generateViralHooks(userText)}`;
+      if (tool === 'thread-architect') return `${generateThreadOutline(userText)}`;
+      if (tool === 'content-studio') return `📱 Content ideas for "${userText}":\n\n${generateContentIdeas(userText)}`;
+      if (tool === 'tweet-score') return `${generateTweetScore(userText)}`;
+      if (tool === 'improve-tweet') return `✨ IMPROVING: "${userText}"\n\n${generateImprovement(userText)}`;
+      if (tool === 'ideas-generator') return `💡 Content ideas about "${userText}":\n\n${generateIdeas(userText)}`;
+    }
+
+    // Handle tool click
+    function handleToolClick(tool) {
+      loadingIndicator.classList.remove('hidden');
+      resultsPanel.classList.add('hidden');
+      
+      setTimeout(() => {
+        const content = generateContent(tool);
+        const card = createResultCard(content, tool);
+        resultsContainer.insertBefore(card, resultsContainer.firstChild);
+        loadingIndicator.classList.add('hidden');
+        resultsPanel.classList.remove('hidden');
+      }, 800 + Math.random() * 400);
+    }
+
+    // Event listeners
+    toolButtons.forEach(btn => {
+      btn.addEventListener('click', () => handleToolClick(btn.getAttribute('data-tool')));
+    });
+
+    clearResultsBtn.addEventListener('click', () => {
+      resultsContainer.innerHTML = '';
+      resultsPanel.classList.add('hidden');
+    });
+
+    updateUI(defaultConfig);
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9db26204444254a2',t:'MTc3MzMxNDE0Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
